@@ -13,7 +13,9 @@ public class TicTacToe implements ActionListener {
 
     Random random = new Random();
     JFrame frame = new JFrame();
+
     JPanel title_panel = new JPanel();
+
     JPanel button_panel = new JPanel();
     JLabel textfield = new JLabel();
     JButton[] buttons = new JButton[size * size];
@@ -21,6 +23,10 @@ public class TicTacToe implements ActionListener {
 
 
     TicTacToe() {
+
+        ImageIcon image = new ImageIcon("background.jpg");
+
+
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(800, 800);
         frame.getContentPane().setBackground(new Color(71, 60, 59));
@@ -29,13 +35,14 @@ public class TicTacToe implements ActionListener {
 
         textfield.setBackground(new Color(194, 149, 145));
         textfield.setForeground(new Color(148, 45, 35));
-        textfield.setFont(new Font(("Italic"), Font.BOLD, 75));
+        textfield.setFont(new Font(("Arial"), Font.BOLD, 75));
         textfield.setHorizontalAlignment(JLabel.CENTER);
         textfield.setText("Tic-Tac-Toe");
         textfield.setOpaque(true);
 
         title_panel.setLayout(new BorderLayout());
         title_panel.setBounds(0, 0, 800, 100);
+
 
         button_panel.setLayout(new GridLayout(size, size));
         button_panel.setBackground(new Color(194, 149, 105));
@@ -56,81 +63,40 @@ public class TicTacToe implements ActionListener {
         frame.add(title_panel, BorderLayout.NORTH);
         frame.add(button_panel);
 
-        FirstTurn();
+        //FirstTurn();
 
 
     }
 
-
-    /*public void actionPerformed(ActionEvent e) {
-
-        for (int i = 0; i < size * size; i++) {
-
-            if (e.getSource() == buttons[i]) {
-                if (player1_turn) {
-                    if (buttons[i].getText() == "") {
-                        buttons[i].setForeground(Color.black);
-                        BestMove();
-                        player1_turn = false;
-                        textfield.setText("O turn");
-                        check_resizable();
-
-                    }
-
-
-                }
-                else {
-                    if (buttons[i].getText() == "") {
-                        buttons[i].setForeground(Color.black);
-                        buttons[i].setText("O");
-                        player1_turn = true;
-                        textfield.setText("X turn");
-                        check_resizable();
-
-                    }
-
-                }
-            }
-        }
-    }*/
 
     public void actionPerformed(ActionEvent e) {
 
-        for (int i = 0; i < size * size; i++) {
 
-
+        for (int i = 0; i < size * size; i++)
             if (e.getSource() == buttons[i]) {
-                if (buttons[i].getText() == "") {
+                if (buttons[i].getText().equals("")) {
+
                     buttons[i].setForeground(Color.black);
                     buttons[i].setText("O");
                     check_resizable();
+                    if (check_resizable()==-1) {
+                        textfield.setText("O wins!");
+                        break;
+                    }
                     textfield.setText("X turn");
                     BestMove();
-                    textfield.setText("O turn");
+                    textfield.setText("X turn");
                     check_resizable();
+                    if(check_resizable()==1) break;
+                    textfield.setText("O turn");
+
 
                 }
             }
-        }
 
     }
 
-    public void FirstTurn() {
 
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-
-        if(player1_turn=true) {
-
-            textfield.setText("X turn");
-
-        }
-        else textfield.setText("O turn");
-    }
 
 
     public int check_resizable() {
@@ -142,29 +108,30 @@ public class TicTacToe implements ActionListener {
         int count = 0;
 
         /*O WYGRYWA W PIONIE*/
-        while (k < size * size) {
+        while (count <= size -1 ) {
 
             j = 0;
             b = 0;
             k = count;
 
-            for (i = 0; i < size; i++) {
+                for (i = 0; i < size; i++) {
 
-                if (buttons[k].getText() == "O") j++;
-                if (j == size) {
-                    textfield.setText("O wins!");
-                    return -1;
+                    if (buttons[k].getText().equals("O")) j++;
+                    if (j == size) {
+                        return -1;
+                    }
+
+                    if (buttons[k].getText().equals("X")) b++;
+                    if (b == size) {
+                        textfield.setText("X wins!");
+                        return 1;
+                    }
+
+                    k += size;
+
                 }
-                if (buttons[k].getText() == "X") b++;
-                if (b == size) {
-                    textfield.setText("X wins!");
-                    return 1;
-                }
 
-                k += size;
-
-            }
-            count++;
+                count++;
 
         }
 
@@ -174,7 +141,7 @@ public class TicTacToe implements ActionListener {
         i = 0;
         j = 0;
         k = 0;
-        count = 0;
+
 
         while (k < size * size) {
 
@@ -182,12 +149,12 @@ public class TicTacToe implements ActionListener {
             b = 0;
             for (i = 0; i < size; i++) {
 
-                if (buttons[k].getText() == "O") j++;
+                if (buttons[k].getText().equals("O")) j++;
                 if (j == size) {
-                    textfield.setText("O wins!");
+
                     return -1;
                 }
-                if (buttons[k].getText() == "X") b++;
+                if (buttons[k].getText().equals("X")) b++;
                 if (b == size) {
                     textfield.setText("X wins!");
                     return 1;
@@ -209,14 +176,14 @@ public class TicTacToe implements ActionListener {
 
         for (i = 0; i < size; i++) {
 
-            if (buttons[k].getText() == "O") j++;
+            if (buttons[k].getText().equals("O")) j++;
             if (j == size) {
-                textfield.setText("O wins!");
+
                 return -1;
             }
 
 
-            if (buttons[k].getText() == "X") b++;
+            if (buttons[k].getText().equals("X")) b++;
             if (b == size) {
                 textfield.setText("X wins!");
                 return 1;
@@ -235,12 +202,11 @@ public class TicTacToe implements ActionListener {
 
         for (i = 0; i < size; i++) {
 
-            if (buttons[k].getText() == "O") j++;
+            if (buttons[k-1].getText().equals("O")) j++;
             if (j == size) {
-                textfield.setText("O wins!");
                 return -1;
             }
-            if (buttons[k].getText() == "X") b++;
+            if (buttons[k-1].getText().equals("X")) b++;
             if (b == size) {
                 textfield.setText("X wins!");
                 return 1;
@@ -259,22 +225,36 @@ public class TicTacToe implements ActionListener {
 
         int BestScore = Integer.MIN_VALUE;
 
+
+        int index=0;
         for (int i = 0; i < size * size; i++) {
 
-            if (buttons[i].getText() == "") //sprawdzenie dostepnosci pola
+            if (buttons[i].getText().equals("")) //sprawdzenie dostepnosci pola
             {
                 buttons[i].setText("X");
-                int score = minimax(0, true);
+                int moveVal = minimax(0, false);
                 buttons[i].setText(""); //undo
 
-                if (score > BestScore) {
-                    BestScore = score;
-                    buttons[i].setText("X");
+                if (moveVal > BestScore) {
+                    BestScore = moveVal;
+                 index=i;
                 }
             }
+
+        }
+        buttons[index].setText("X");
+
+    }
+
+    public boolean movesleft(){
+
+
+        for(int i=0;i<size*size;i++){
+           if (buttons[i].getText().equals("")) return true;
         }
 
-        //player1_turn = false;
+        return false;
+
     }
 
 
@@ -283,11 +263,10 @@ public class TicTacToe implements ActionListener {
 
         int result = check_resizable();
 
-        if (result != 0){
+
             if (result==1) return 1;
             if (result==-1) return -1;
-        }
-
+            if (!movesleft()) return 0;
 
         if(isMaximizng){
 
@@ -296,7 +275,8 @@ public class TicTacToe implements ActionListener {
 
             for(int i=0;i<size*size;i++){
 
-                if (buttons[i].getText() == ""){
+                if (buttons[i].getText().equals("")){
+
                     buttons[i].setText("X");
                     int score = minimax(depth+1,false);
                     buttons[i].setText("");
@@ -317,7 +297,8 @@ public class TicTacToe implements ActionListener {
 
 
             for(int i=0;i<size*size;i++){
-                if (buttons[i].getText() == ""){
+                if (buttons[i].getText().equals("")){
+
                     buttons[i].setText("O");
                     int score = minimax(depth+1,true);
                     buttons[i].setText("");
@@ -331,15 +312,6 @@ public class TicTacToe implements ActionListener {
         }
 
     }
-
-
-
-
-
-
-
-
-
 
 
 }
