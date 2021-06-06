@@ -11,12 +11,10 @@ import java.util.Random;
 
     public class TicTacToe implements ActionListener {
 
-        int size = 3;
+        int size = 4;
         int amount = 3;
 
 
-
-        Random random = new Random();
         JFrame frame = new JFrame();
 
         JPanel title_panel = new JPanel();
@@ -24,7 +22,7 @@ import java.util.Random;
         JPanel button_panel = new JPanel();
         JLabel textfield = new JLabel();
         JButton[] buttons = new JButton[size * size];
-        boolean player1_turn = false;
+
 
 
         TicTacToe() {
@@ -88,14 +86,23 @@ import java.util.Random;
                             break;
                         }
                         textfield.setText("X turn");
+                        if(check_resizable()==1){
+                            buttons_off();
+                            textfield.setText("It's a draw!");
+                        }
                         BestMove();
                         check_resizable();
                         if (check_resizable() == 1000) {
+                            textfield.setText("X wins!");
                             buttons_off();
                             break;
                         }
                         textfield.setText("O turn");
 
+                        if(check_resizable()==1){
+                            buttons_off();
+                            textfield.setText("It's a draw!");
+                        }
 
                     }
                 }
@@ -146,7 +153,7 @@ import java.util.Random;
                         b++;
 
                         if (b == amount) {
-                            textfield.setText("X wins!");
+
                             return 1000;
                         }
                     }
@@ -192,7 +199,7 @@ import java.util.Random;
 
                         if (b == amount) {
 
-                            textfield.setText("X wins!");
+
                             return 1000;
                         }
                     }
@@ -233,7 +240,7 @@ import java.util.Random;
                     b++;
 
                     if (b == amount) {
-                        textfield.setText("X wins!");
+
                         return 1000;
                     }
                 }
@@ -268,7 +275,6 @@ import java.util.Random;
                     b++;
 
                     if (b == amount) {
-                        textfield.setText("X wins!");
                         return 1000;
                     }
                 }
@@ -306,7 +312,7 @@ import java.util.Random;
                 if (buttons[i].getText().equals("")) //sprawdzenie dostepnosci pola
                 {
                     buttons[i].setText("X");
-                    int moveVal = minimax(0, -1000000, 1000000, false);
+                    int moveVal = minimax(0, Integer.MIN_VALUE, Integer.MAX_VALUE, false);
                     buttons[i].setText(""); //undo
 
                     if (moveVal > BestScore) {
@@ -345,7 +351,7 @@ import java.util.Random;
 
 
 
-            if (depth == size+1) return 0;
+            if (depth == 5) return 10000;
 
             if (isMaximizng) {
 
