@@ -1,10 +1,9 @@
-import org.w3c.dom.ls.LSOutput;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Scanner;
+
 
 
 public class TicTacToe implements ActionListener {
@@ -350,8 +349,8 @@ public class TicTacToe implements ActionListener {
 
 
             if (depth == 5) {
-                if (isMaximizng) return Calculate_current_state("O"); //zwrocenie ilosci O w rzedzie
-                else return (-1) * Calculate_current_state("X");//zwrocenie ilosci X w rzedzie
+                if (isMaximizng) return Calculate_current_state("O"); //zwrocenie stanu gry dla O gdy gra trwa
+                else return (-1) * Calculate_current_state("X");//zwrocenie stanu gry dla X gdy gra trwa
             }
 
             int bestScore;//zmienna przechowujaca najlepszy wynik

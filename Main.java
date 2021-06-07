@@ -18,8 +18,6 @@ public class Main {
                 TicTacToe game = new TicTacToe(size1,amount1);
 
 
-
-
         }
 
 
