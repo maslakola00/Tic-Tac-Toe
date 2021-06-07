@@ -1,18 +1,13 @@
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Random;
-
-
-
 
 
     public class TicTacToe implements ActionListener {
 
         int size = 4;
-        int amount = 3;
+        int amount = 4;
 
 
         JFrame frame = new JFrame();
@@ -24,10 +19,7 @@ import java.util.Random;
         JButton[] buttons = new JButton[size * size];
 
 
-
         TicTacToe() {
-
-            ImageIcon image = new ImageIcon("background.jpg");
 
 
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -66,7 +58,6 @@ import java.util.Random;
             frame.add(title_panel, BorderLayout.NORTH);
             frame.add(button_panel);
 
-
         }
 
 
@@ -86,7 +77,7 @@ import java.util.Random;
                             break;
                         }
                         textfield.setText("X turn");
-                        if(check_resizable()==1){
+                        if (check_resizable() == 1) {
                             buttons_off();
                             textfield.setText("It's a draw!");
                         }
@@ -99,7 +90,7 @@ import java.util.Random;
                         }
                         textfield.setText("O turn");
 
-                        if(check_resizable()==1){
+                        if (check_resizable() == 1) {
                             buttons_off();
                             textfield.setText("It's a draw!");
                         }
@@ -109,9 +100,9 @@ import java.util.Random;
 
         }
 
-        public void buttons_off(){
+        public void buttons_off() {
 
-            for(int i=0;i<size*size;i++){
+            for (int i = 0; i < size * size; i++) {
                 buttons[i].setEnabled(false);
             }
 
@@ -120,108 +111,68 @@ import java.util.Random;
 
         public int check_resizable() {
 
-            int i = 0;
-            int j = 0;
-            int b = 0;
-            int k = 0;
+            int j;
+            int b;
+            int k;
             int count = 0;
 
-          //  O WYGRYWA W PIONIE
+            //Wygrana w pionie
             while (count <= size - 1) {
-
                 j = 0;
                 b = 0;
                 k = count;
 
-                for (i = 0; i < size; i++) {
-
-
-
+                for (int i = 0; i < size; i++) {
                     if (buttons[k].getText().equals("O")) {
                         j++;
-
-
-                        if (j == amount) {
-                            return -1000;
-                        }
-
-                    }
-                    else j=0;
-
+                        if (j == amount) return -1000;
+                    } else j = 0;
 
                     if (buttons[k].getText().equals("X")) {
                         b++;
-
-                        if (b == amount) {
-
-                            return 1000;
-                        }
-                    }
-                    else b=0;
-
+                        if (b == amount) return 1000;
+                    } else b = 0;
 
                     k += size;
-
                 }
 
                 count++;
-
             }
 
 
-
-          //  O WYGRYWA W POZIOMIE
-            i = 0;
-            j = 0;
+            //WYGRANA W POZIOMIE
             k = 0;
-
 
             while (k < size * size) {
 
                 j = 0;
                 b = 0;
-                for (i = 0; i < size; i++) {
-
-
-
+                for (int i = 0; i < size; i++) {
                     if (buttons[k].getText().equals("O")) {
                         j++;
 
-                        if (j == amount) {
-
-                            return -1000;
-                        }
-                    }
-                    else j=0;
+                        if (j == amount) return -1000;
+                    } else j = 0;
 
                     if (buttons[k].getText().equals("X")) {
                         b++;
 
                         if (b == amount) {
-
-
                             return 1000;
                         }
-                    }
-                    else b=0;
-
+                    } else b = 0;
                     k++;
-
                 }
-
-
             }
 
 
-            i = 0;
             j = 0;
             b = 0;
             k = 0;
 
-          //  O WYGRYWA PO PIERWSZEJ PRZEKĄTNEJ
+            //  O WYGRYWA PO PIERWSZEJ PRZEKĄTNEJ
 
-            for (i = 0; i < size; i++) {
-
+            for (int i = 0; i < size; i++) {
 
 
                 if (buttons[k].getText().equals("O")) {
@@ -232,8 +183,7 @@ import java.util.Random;
                         return -1000;
                     }
 
-                }
-                else j=0;
+                } else j = 0;
 
 
                 if (buttons[k].getText().equals("X")) {
@@ -243,61 +193,114 @@ import java.util.Random;
 
                         return 1000;
                     }
-                }
-                else b=0;
+                } else b = 0;
 
                 k += size + 1;
             }
 
 
-            i = 0;
             j = 0;
             b = 0;
             k = size;
 
-         //   O WYGRYWA PO DRUGIEJ PRZEKĄTNEJ
+            //   O WYGRYWA PO DRUGIEJ PRZEKĄTNEJ
 
-            for (i = 0; i < size; i++) {
-
-
-
-
+            for (int i = 0; i < size; i++) {
                 if (buttons[k - 1].getText().equals("O")) {
                     j++;
 
-                    if (j == amount) {
-                        return -1000;
-                    }
+                    if (j == amount) return -1000;
                 }
-                else j=0;
+                else j = 0;
 
                 if (buttons[k - 1].getText().equals("X")) {
                     b++;
-
-                    if (b == amount) {
-                        return 1000;
-                    }
+                    if (b == amount) return 1000;
                 }
-                else b=0;
+                else b = 0;
 
                 k += size - 1;
             }
 
-            i=0;
-            int d=0;
 
-            for( i=0; i< size*size;i++)
-            {
-                if(buttons[i].getText().equals("X") || buttons[i].getText().equals("O"))
+            //REMIS
+
+            int d = 0;
+
+            for (int i = 0; i < size * size; i++) {
+                if (buttons[i].getText().equals("X") || buttons[i].getText().equals("O"))
                     d++;
             }
-            if(d==size*size){
+            if (d == size * size) {
                 return 1;
             }
 
-
+            //GRA SIE TOCZY
             return 0;
+        }
 
+
+        public int Calculate_current_state(String sign) {
+            int count2 = 0;
+            int result = 0;
+            int count = 0;
+            int k;
+
+
+            //pion
+            while (count <= size - 1) {
+
+                k = count;
+                count2 = 0;
+
+                for (int i = 0; i < size; i++) {
+
+                    if (buttons[k].getText().equals(sign)) count2++;
+                    k += size;
+                }
+                count++;
+
+                if (count2 != 0) result += count * 10;
+            }
+
+
+            k = 0;
+
+            //poziom
+            while (k < size * size) {
+
+                count2 = 0;
+                for (int i = 0; i < size; i++) {
+                    if (buttons[k].getText().equals(sign)) count2++;
+
+                    k++;
+                }
+                if (count2 != 0) result += count * 10;
+            }
+
+
+            //pierwsza przekątna
+            k = 0;
+            for (int i = 0; i < size; i++) {
+
+                if (buttons[k].getText().equals(sign)) count2++;
+
+                k += size + 1;
+            }
+            if (count2 != 0) result += count * 10;
+
+
+            k = size;
+            //   O WYGRYWA PO DRUGIEJ PRZEKĄTNEJ
+            for (int i = 0; i < size; i++) {
+                if (buttons[k - 1].getText().equals(sign)) count2++;
+                k += size - 1;
+            }
+
+            if (count2 != 0) result += count * 10;
+
+
+            return result;
         }
 
 
@@ -326,78 +329,53 @@ import java.util.Random;
 
         }
 
-        public boolean movesleft() {
-
-
-            for (int i = 0; i < size * size; i++) {
-                if (buttons[i].getText().equals("")) return true;
-            }
-
-            return false;
-
-        }
-
 
         public int minimax(int depth, int alpha, int beta, boolean isMaximizng) {
 
             int result = check_resizable();
 
-            if(result!=0) {
+            if (result != 0) {
                 if (result == 1000) return 1000 - depth;
                 if (result == -1000) return -1000 + depth;
                 if (result == 1) return 1;
             }
 
 
+            if (depth == 5) {
+                if (isMaximizng) return Calculate_current_state("O");
+                else return (-1) * Calculate_current_state("X");
+            }
 
-
-            if (depth == 5) return 10000;
-
+            int bestScore;
             if (isMaximizng) {
-
-                int bestScore = Integer.MIN_VALUE; //przypisujemy minimalna wartosc zeby ja pozniej zwiekszyc
-
+                bestScore = Integer.MIN_VALUE;
 
                 for (int i = 0; i < size * size; i++) {
-
                     if (buttons[i].getText().equals("")) {
-
                         buttons[i].setText("X");
                         int score = minimax(depth + 1, alpha, beta, false);
                         buttons[i].setText("");
                         bestScore = Math.max(score, bestScore);
                         alpha = Math.max(alpha, score);
                         if (beta <= alpha) break;
-
                     }
-
                 }
-                return bestScore;
             } else {
-
-
-                int bestScore = Integer.MAX_VALUE;
-
+                bestScore = Integer.MAX_VALUE;
 
                 for (int i = 0; i < size * size; i++) {
                     if (buttons[i].getText().equals("")) {
-
                         buttons[i].setText("O");
                         int score = minimax(depth + 1, alpha, beta, true);
                         buttons[i].setText("");
                         bestScore = Math.min(score, bestScore);
                         beta = Math.min(beta, score);
                         if (beta <= alpha) break;
-
                     }
                 }
-
-                return bestScore;
-
             }
-
+            return bestScore;
         }
-
     }
 
 
