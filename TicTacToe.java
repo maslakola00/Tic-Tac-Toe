@@ -10,8 +10,8 @@ import java.util.Scanner;
 public class TicTacToe implements ActionListener {
 
 
-                int size=3; //rozmiar tablicy
-                int amount=3; //ilosc znakow wyrgywajacych w rzedzie
+            int size; //rozmiar tablicy
+            int amount; //ilosc znakow wyrgywajacych w rzedzie
 
 
 
@@ -21,12 +21,15 @@ public class TicTacToe implements ActionListener {
 
         JPanel button_panel = new JPanel();
         JLabel textfield = new JLabel();
-        JButton[] buttons = new JButton[size * size]; //tworzenie tablicy guzikow
+        JButton[] buttons;//tworzenie tablicy guzikow
 
 
-        TicTacToe() {
+        TicTacToe(int size1 , int amount1) {
 
+            size = size1;
+            amount=amount1;
 
+            buttons = new JButton[size * size];
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //zamykanie programu przy uzyciu X
             frame.setSize(800, 800);
             frame.getContentPane().setBackground(new Color(71, 60, 59));
