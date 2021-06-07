@@ -1,32 +1,38 @@
+import org.w3c.dom.ls.LSOutput;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Scanner;
 
 
-    public class TicTacToe implements ActionListener {
+public class TicTacToe implements ActionListener {
 
-        int size = 4;
-        int amount = 4;
+
+                int size=3; //rozmiar tablicy
+                int amount=3; //ilosc znakow wyrgywajacych w rzedzie
+
 
 
         JFrame frame = new JFrame();
 
-        JPanel title_panel = new JPanel();
+        JPanel title_panel = new JPanel(); //tworzenie panelu tekstowego
 
         JPanel button_panel = new JPanel();
         JLabel textfield = new JLabel();
-        JButton[] buttons = new JButton[size * size];
+        JButton[] buttons = new JButton[size * size]; //tworzenie tablicy guzikow
 
 
         TicTacToe() {
 
 
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //zamykanie programu przy uzyciu X
             frame.setSize(800, 800);
             frame.getContentPane().setBackground(new Color(71, 60, 59));
             frame.setLayout(new BorderLayout());
             frame.setVisible(true);
+
 
             textfield.setBackground(new Color(194, 149, 145));
             textfield.setForeground(new Color(148, 45, 35));
@@ -94,21 +100,22 @@ import java.awt.event.ActionListener;
                             buttons_off();
                             textfield.setText("It's a draw!");
                         }
-
                     }
                 }
-
         }
 
+
+        //funkcja wylaczajaca guziki
         public void buttons_off() {
 
             for (int i = 0; i < size * size; i++) {
-                buttons[i].setEnabled(false);
+                buttons[i].setEnabled(false); //wylaczenie wszystkich guzikow po skonczonej grze
             }
 
         }
 
 
+    //funkcja sprawdzajaca wygrana/remis
         public int check_resizable() {
 
             int j;
@@ -126,21 +133,22 @@ import java.awt.event.ActionListener;
                     if (buttons[k].getText().equals("O")) {
                         j++;
                         if (j == amount) return -1000;
-                    } else j = 0;
+                    }
+                    else j = 0;
 
                     if (buttons[k].getText().equals("X")) {
                         b++;
                         if (b == amount) return 1000;
-                    } else b = 0;
+                    }
+                    else b = 0;
 
                     k += size;
                 }
-
                 count++;
             }
 
 
-            //WYGRANA W POZIOMIE
+            //Wygrana w poziomie
             k = 0;
 
             while (k < size * size) {
@@ -152,15 +160,14 @@ import java.awt.event.ActionListener;
                         j++;
 
                         if (j == amount) return -1000;
-                    } else j = 0;
+                    }
+                    else j = 0;
 
                     if (buttons[k].getText().equals("X")) {
                         b++;
-
-                        if (b == amount) {
-                            return 1000;
-                        }
-                    } else b = 0;
+                        if (b == amount) return 1000;
+                    }
+                    else b = 0;
                     k++;
                 }
             }
@@ -170,30 +177,22 @@ import java.awt.event.ActionListener;
             b = 0;
             k = 0;
 
-            //  O WYGRYWA PO PIERWSZEJ PRZEKĄTNEJ
+            //Wygrana na przekatnej diagonalnej
 
             for (int i = 0; i < size; i++) {
 
 
                 if (buttons[k].getText().equals("O")) {
                     j++;
-
-                    if (j == amount) {
-
-                        return -1000;
-                    }
-
-                } else j = 0;
-
+                    if (j == amount) return -1000;
+                }
+                else j = 0;
 
                 if (buttons[k].getText().equals("X")) {
                     b++;
-
-                    if (b == amount) {
-
-                        return 1000;
-                    }
-                } else b = 0;
+                    if (b == amount) return 1000;
+                }
+                else b = 0;
 
                 k += size + 1;
             }
@@ -203,7 +202,7 @@ import java.awt.event.ActionListener;
             b = 0;
             k = size;
 
-            //   O WYGRYWA PO DRUGIEJ PRZEKĄTNEJ
+            //Wygrana na drugiej przekatnej
 
             for (int i = 0; i < size; i++) {
                 if (buttons[k - 1].getText().equals("O")) {
@@ -223,7 +222,7 @@ import java.awt.event.ActionListener;
             }
 
 
-            //REMIS
+            //Remis
 
             int d = 0;
 
@@ -235,11 +234,13 @@ import java.awt.event.ActionListener;
                 return 1;
             }
 
-            //GRA SIE TOCZY
+            //Gra toczy sie dalej
             return 0;
         }
 
 
+
+        //funkcja sprawdzajaca ile danych znakow znajduje sie w pionie/poziomie/na przekatnych
         public int Calculate_current_state(String sign) {
             int count2 = 0;
             int result = 0;
@@ -247,7 +248,7 @@ import java.awt.event.ActionListener;
             int k;
 
 
-            //pion
+            //Ilosc znakow w pionie
             while (count <= size - 1) {
 
                 k = count;
@@ -263,10 +264,9 @@ import java.awt.event.ActionListener;
                 if (count2 != 0) result += count * 10;
             }
 
-
             k = 0;
 
-            //poziom
+            //Ilosc znakow w poziomie
             while (k < size * size) {
 
                 count2 = 0;
@@ -279,7 +279,7 @@ import java.awt.event.ActionListener;
             }
 
 
-            //pierwsza przekątna
+            //Ilosc znakow na przekatnej diagonalnej
             k = 0;
             for (int i = 0; i < size; i++) {
 
@@ -291,7 +291,8 @@ import java.awt.event.ActionListener;
 
 
             k = size;
-            //   O WYGRYWA PO DRUGIEJ PRZEKĄTNEJ
+
+            //Ilosc znakow na drugiej przekatnej
             for (int i = 0; i < size; i++) {
                 if (buttons[k - 1].getText().equals(sign)) count2++;
                 k += size - 1;
@@ -300,13 +301,15 @@ import java.awt.event.ActionListener;
             if (count2 != 0) result += count * 10;
 
 
-            return result;
+            return result; //zwrocenie ilosci znakow
         }
 
 
+
+        //funkcja znajdujaca najlepszy mozliwy ruch
         public void BestMove() {
 
-            int BestScore = Integer.MIN_VALUE;
+            int BestScore = Integer.MIN_VALUE; //ustawienie BestScore na -inf
 
 
             int index = 0;
@@ -314,9 +317,9 @@ import java.awt.event.ActionListener;
 
                 if (buttons[i].getText().equals("")) //sprawdzenie dostepnosci pola
                 {
-                    buttons[i].setText("X");
-                    int moveVal = minimax(0, Integer.MIN_VALUE, Integer.MAX_VALUE, false);
-                    buttons[i].setText(""); //undo
+                    buttons[i].setText("X"); //wpisanie X w pierwsze wolne miejsce
+                    int moveVal = minimax(0, Integer.MIN_VALUE, Integer.MAX_VALUE, false); //wywolanie minimax
+                    buttons[i].setText(""); //usuniecie wczesniej wstawionego X
 
                     if (moveVal > BestScore) {
                         BestScore = moveVal;
@@ -325,51 +328,57 @@ import java.awt.event.ActionListener;
                 }
 
             }
-            buttons[index].setText("X");
+            buttons[index].setText("X"); //postawienie X na najlepszej mozliwej pozycji
 
         }
 
 
+
+        //algorytm minimax
         public int minimax(int depth, int alpha, int beta, boolean isMaximizng) {
 
-            int result = check_resizable();
+            int result = check_resizable(); //sprawdzenie czy ktos wygral
 
             if (result != 0) {
-                if (result == 1000) return 1000 - depth;
-                if (result == -1000) return -1000 + depth;
-                if (result == 1) return 1;
+                if (result == 1000) return 1000 - depth; //X wygrywa
+                if (result == -1000) return -1000 + depth; //O wygrywa
+                if (result == 1) return 1; //remis
             }
 
 
             if (depth == 5) {
-                if (isMaximizng) return Calculate_current_state("O");
-                else return (-1) * Calculate_current_state("X");
+                if (isMaximizng) return Calculate_current_state("O"); //zwrocenie ilosci O w rzedzie
+                else return (-1) * Calculate_current_state("X");//zwrocenie ilosci X w rzedzie
             }
 
-            int bestScore;
+            int bestScore;//zmienna przechowujaca najlepszy wynik
+
+            //gra gracz maksymalizujacy - komputer
             if (isMaximizng) {
-                bestScore = Integer.MIN_VALUE;
+                bestScore = Integer.MIN_VALUE; //ustawienie zmiennej na -inf
 
                 for (int i = 0; i < size * size; i++) {
                     if (buttons[i].getText().equals("")) {
                         buttons[i].setText("X");
-                        int score = minimax(depth + 1, alpha, beta, false);
+                        int score = minimax(depth + 1, alpha, beta, false); //rekurencyjne wywolanie minimax
                         buttons[i].setText("");
                         bestScore = Math.max(score, bestScore);
-                        alpha = Math.max(alpha, score);
+                        alpha = Math.max(alpha, score);//szukanie maksymalnej wartosci
                         if (beta <= alpha) break;
                     }
                 }
-            } else {
-                bestScore = Integer.MAX_VALUE;
+            }
+            //gra gracz minimalizujacy
+            else {
+                bestScore = Integer.MAX_VALUE;//ustawienie zmiennej na +inf
 
                 for (int i = 0; i < size * size; i++) {
                     if (buttons[i].getText().equals("")) {
                         buttons[i].setText("O");
-                        int score = minimax(depth + 1, alpha, beta, true);
+                        int score = minimax(depth + 1, alpha, beta, true); //rekurencyjne wywolanie minimax
                         buttons[i].setText("");
                         bestScore = Math.min(score, bestScore);
-                        beta = Math.min(beta, score);
+                        beta = Math.min(beta, score); //szukanie minimalnej wartosci
                         if (beta <= alpha) break;
                     }
                 }
@@ -377,6 +386,7 @@ import java.awt.event.ActionListener;
             return bestScore;
         }
     }
+
 
 
 
